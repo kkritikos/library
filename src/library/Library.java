@@ -3,7 +3,9 @@ package library;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Library {
+public class Library implements java.io.Serializable{
+	private static final long serialVersionUID = -813561890224024887L;
+	
 	private String name, address;
 	private Set<Book> sellingBooks = new HashSet<Book>(), lendingBooks = new HashSet<Book>();
 	private Set<LibraryMember> members = new HashSet<LibraryMember>();

@@ -1,6 +1,8 @@
 package library;
 
-public class Person {
+public class Person implements java.io.Serializable{
+	private static final long serialVersionUID = -9132275263691387159L;
+	
 	private String name, id;
 	
 	public Person(String id, String name) {
