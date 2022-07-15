@@ -1,0 +1,1 @@
+insert into lendingBook values(?, ?, ?, 0);

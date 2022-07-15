@@ -1,0 +1,1 @@
+update sellingBook set itemsSold = itemsSold + 1 where isbn=?;

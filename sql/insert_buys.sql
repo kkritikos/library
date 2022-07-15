@@ -1,0 +1,1 @@
+insert into buys values (?, ?, ?);
