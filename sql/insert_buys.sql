@@ -1,1 +1,1 @@
-insert into buys values (?, ?, ?);
+insert into buys (isbn, memberId, sellingDate) values (?, ?, ?);

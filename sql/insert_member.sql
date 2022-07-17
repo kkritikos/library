@@ -1,1 +1,1 @@
-insert into member values(?, ?, ?);
+insert into member values(?, ?, ?)

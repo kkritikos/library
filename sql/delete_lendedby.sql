@@ -1,1 +1,1 @@
-delete from lendedBy where isbn = ? and memberId = ?;
+delete from lendedBy where isbn=? and memberId=?

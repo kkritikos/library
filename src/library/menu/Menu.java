@@ -1,13 +1,10 @@
 package library.menu;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import library.Book;
+import library.DatabaseConnector;
 import library.LendingBook;
 import library.Library;
 import library.LibraryMember;
@@ -15,53 +12,10 @@ import library.SellingBook;
 
 public class Menu {
 	
-	public static void writeLibraryState(Library l, String fileName) {
-		ObjectOutputStream oos = null;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(fileName));
-		}
-		catch(Exception e) {
-			System.out.println("Something went wrong while opening file for writing");
-			System.out.println("Cause: " + e.getMessage());
-			System.out.println("Exiting!!!");
-			System.exit(-1);
-		}
-		
-		try {
-			oos.writeObject(l);
-			oos.close();
-		}
-		catch(Exception e) {
-			System.out.println("Something went wrong while attempting to write the state");
-			System.out.println("Cause: " + e.getMessage());
-			System.out.println("Exiting!!!");
-			System.exit(-1);
-		}
-	}
-	
-	public static Library readLibraryState(String fileName) {
-		ObjectInputStream ois = null;
-		try {
-			ois = new ObjectInputStream(new FileInputStream(fileName));
-		}
-		catch(Exception e) {
-			System.out.println("Something went wrong while opening file for reading");
-			System.out.println("Cause: " + e.getMessage());
-			return null;
-		}
-		
-		try {
-			Library l = (Library)ois.readObject();
-			ois.close();
-			return l;
-		}
-		catch(Exception e) {
-			System.out.println("Something went wrong while attempting to read the state");
-			System.out.println("Cause: " + e.getMessage());
-			System.out.println("Exiting!!!");
-			System.exit(-1);
-		}
-		return null;
+	public static void setLibraryState() {
+		boolean exists = DatabaseConnector.existsDatabase();
+		System.out.println("Does db exist? " + exists);
+		if (!exists) DatabaseConnector.createDatabaseTables();
 	}
 	
 	private static void getLibraryMember(Scanner input, Library library) {
@@ -146,10 +100,9 @@ public class Menu {
 	}
 
 	public static void main(String[] args) {
-		//Checking if library state exists so as to be loaded
-		String fileName = "state.dat";
-		Library library = readLibraryState(fileName);
-		if (library == null) library = new Library("MyLibrary", "Address1");
+		Library library = new Library("MyLibrary", "Address1");
+		//Checking if library state does not exist in db so as to be constructed
+		setLibraryState();
 		
 		System.out.println("MENU for Library Management");
 		int choice = 0;
@@ -179,9 +132,7 @@ public class Menu {
 				case 5: lendOrSellBook(input, false, library); break;
 				case 6: returnBook(input,library); break;
 				case 7: library.printStatus(); break;
-			}
-			//Store library state per each method that updates it
-			if (choice >= 1 && choice <= 6) writeLibraryState(library,fileName); 
+			} 
 		} while (choice >= 1 && choice <= 7);
 		
 		input.close();
