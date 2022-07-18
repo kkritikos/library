@@ -25,8 +25,6 @@ public abstract class Book implements java.io.Serializable{
 		return copyNumber;
 	}
 	
-	
-
 	public void setCopyNumber(int copyNumber) {
 		this.copyNumber = copyNumber;
 	}

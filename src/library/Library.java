@@ -10,9 +10,13 @@ public class Library implements java.io.Serializable{
 		this.address = address;
 	}
 	
-	public boolean addSellingBook(SellingBook sb) { return DatabaseConnector.insertSellingBook(sb); }
+	public boolean addSellingBook(SellingBook sb) { 
+		return DatabaseConnector.insertSellingBook(sb); 
+	}
 	
-	public boolean addLendingBook(LendingBook lb) { return DatabaseConnector.insertLendingBook(lb); }
+	public boolean addLendingBook(LendingBook lb) { 
+		return DatabaseConnector.insertLendingBook(lb); 
+	}
 	
 	public boolean addMember(LibraryMember lm) {
 		return DatabaseConnector.insertMember(lm);
@@ -22,6 +26,7 @@ public class Library implements java.io.Serializable{
 		return DatabaseConnector.sellBook(isbn,memberId);
 	}
 	
+	
 	public boolean loanBook(String isbn, String memberId) {
 		return DatabaseConnector.loanBook(isbn,memberId);
 	}
@@ -30,8 +35,6 @@ public class Library implements java.io.Serializable{
 		return DatabaseConnector.returnBook(isbn,memberId);
 	}
 	
-	
-
 	public String getName() { return name; }
 
 	public String getAddress() { return address; }

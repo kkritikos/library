@@ -62,8 +62,7 @@ public class DatabaseConnector {
 				while (rs.next()) {
 					String catalog = rs.getString(1);
 					if (catalog.equals(dbName)) {
-						found = true;
-						break;
+						found = true; break;
 					}
 				}
 			}
@@ -79,12 +78,36 @@ public class DatabaseConnector {
 		return found;
 	}
 	
+	public static boolean createDatabaseTables() {
+		boolean created = false;
+		
+		Connection con = getConnection(null);
+		if (con != null) {
+			try {
+				String stmt = "create database " + dbName + ";";
+				Statement st = con.createStatement();
+				st.execute(stmt); created = true;
+			}
+			catch(Exception e) {
+				System.out.println("Something went wrong while creating the database");
+				System.out.println(e.getMessage());
+			}
+			finally {
+				closeConnection(con);
+			}
+		}
+		if (created) return createTables();
+		
+		return created;
+	}
+	
 	private static boolean createTables() {
 		boolean created = false;
 		
 		Connection con = getConnection(dbName);
 		if (con != null) {
 			try {
+				con.setAutoCommit(false);
 				String stmt = getFileContent("sql/member.sql");
 				Statement st = con.createStatement();
 				st.execute(stmt);
@@ -96,44 +119,19 @@ public class DatabaseConnector {
 				st.execute(stmt);
 				stmt = getFileContent("sql/buys.sql");
 				st.execute(stmt);
+				
+				con.commit();
 				created = true;
 			}
 			catch(Exception e) {
 				System.out.println("Something went wrong while creating the tables");
 				System.out.println(e.getMessage());
+				rollBack(con);
 			}
 			finally {
 				closeConnection(con);
 			}
 		}
-		
-		System.out.println("Were tables created? " + created);
-		
-		return created;
-
-	}
-	
-	public static boolean createDatabaseTables() {
-		boolean created = false;
-		
-		Connection con = getConnection(null);
-		if (con != null) {
-			try {
-				String stmt = "create database " + dbName + ";";
-				Statement st = con.createStatement();
-				st.execute(stmt);
-				created = true;
-			}
-			catch(Exception e) {
-				System.out.println("Something went wrong while creating the database");
-				System.out.println(e.getMessage());
-			}
-			finally {
-				closeConnection(con);
-			}
-		}
-		System.out.println("Was db created? " + created);
-		if (created) return createTables();
 		
 		return created;
 	}
@@ -148,8 +146,7 @@ public class DatabaseConnector {
 				st.setString(1,lm.getMemberId());
 				st.setString(2,lm.getId());
 				st.setString(3,lm.getName());
-				st.execute();
-				created = true;
+				st.execute(); created = true;
 			}
 			catch(Exception e) {
 				System.out.println("Something went wrong while inserting a library member");
@@ -173,8 +170,7 @@ public class DatabaseConnector {
 				st.setString(1,lb.getIsbn());
 				st.setString(2,lb.getTitle());
 				st.setInt(3,lb.getCopyNumber());
-				st.execute();
-				created = true;
+				st.execute(); created = true;
 			}
 			catch(Exception e) {
 				System.out.println("Something went wrong while inserting a lending book");
@@ -202,7 +198,7 @@ public class DatabaseConnector {
 				created = true;
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while inserting a lending book");
+				System.out.println("Something went wrong while inserting a selling book");
 				System.out.println(e.getMessage());
 			}
 			finally {
@@ -250,7 +246,7 @@ public class DatabaseConnector {
 				created = true;
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while inserting a lending book");
+				System.out.println("Something went wrong while inserting a book selling event");
 				System.out.println(e.getMessage());
 				rollBack(con);
 			}
@@ -284,7 +280,7 @@ public class DatabaseConnector {
 				created = true;
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while inserting a lending book");
+				System.out.println("Something went wrong while inserting a book lending event");
 				System.out.println(e.getMessage());
 				rollBack(con);
 			}
@@ -318,7 +314,7 @@ public class DatabaseConnector {
 				created = true;
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while inserting a lending book");
+				System.out.println("Something went wrong while anticipating a return book event");
 				System.out.println(e.getMessage());
 				rollBack(con);
 			}
@@ -337,8 +333,7 @@ public class DatabaseConnector {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("select * from member");
 				while (rs.next()) {
-					String memberId = rs.getString(1);
-					String id = rs.getString(2);
+					String memberId = rs.getString(1); String id = rs.getString(2);
 					String name = rs.getString(3);
 					LibraryMember lm = new LibraryMember(id, name, memberId);
 					System.out.println(lm);
@@ -362,17 +357,15 @@ public class DatabaseConnector {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("select * from lendingBook");
 				while (rs.next()) {
-					String isbn = rs.getString(1);
-					String title = rs.getString(2);
-					int copyNum = rs.getInt(3);
-					int itemsLended = rs.getInt(4);
+					String isbn = rs.getString(1); String title = rs.getString(2);
+					int copyNum = rs.getInt(3); int itemsLended = rs.getInt(4);
 					LendingBook lb = new LendingBook(isbn,title,copyNum);
 					lb.setItemsLended(itemsLended);
 					System.out.println(lb);
 				}
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while accessing library members");
+				System.out.println("Something went wrong while accessing lending books");
 				System.out.println(e.getMessage());
 				rollBack(con);
 			}
@@ -399,7 +392,7 @@ public class DatabaseConnector {
 				}
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong while accessing library members");
+				System.out.println("Something went wrong while accessing selling books");
 				System.out.println(e.getMessage());
 				rollBack(con);
 			}
