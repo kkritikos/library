@@ -1,8 +1,8 @@
 package library;
 
 public abstract class Book {
-	private String isbn;
-	private String title;
+	private final String isbn;
+	private final String title;
 	private int copyNumber = 0;
 	
 	public Book(String isbn, String title, int copyNumber) {
@@ -12,19 +12,17 @@ public abstract class Book {
 	}
 	
 	public String getIsbn() {
-		return new String(isbn);
+		return isbn;
 	}
 
 	public String getTitle() {
-		return new String(title);
+		return title;
 	}
 	
 	public int getCopyNumber() {
 		return copyNumber;
 	}
 	
-	
-
 	public void setCopyNumber(int copyNumber) {
 		this.copyNumber = copyNumber;
 	}

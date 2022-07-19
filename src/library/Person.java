@@ -1,7 +1,7 @@
 package library;
 
 public class Person {
-	private String name, id;
+	private final String name, id;
 	
 	public Person(String id, String name) {
 		this.id = id;
@@ -9,11 +9,11 @@ public class Person {
 	}
 
 	public String getName() {
-		return new String(name);
+		return name;
 	}
 
 	public String getId() {
-		return new String(id);
+		return id;
 	}
 	
 	public String toString() {
