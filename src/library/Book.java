@@ -3,8 +3,8 @@ package library;
 public abstract class Book implements java.io.Serializable{
 	private static final long serialVersionUID = -992069083415874065L;
 	
-	private String isbn;
-	private String title;
+	private final String isbn;
+	private final String title;
 	private int copyNumber = 0;
 	
 	public Book(String isbn, String title, int copyNumber) {
@@ -14,11 +14,11 @@ public abstract class Book implements java.io.Serializable{
 	}
 	
 	public String getIsbn() {
-		return new String(isbn);
+		return isbn;
 	}
 
 	public String getTitle() {
-		return new String(title);
+		return title;
 	}
 	
 	public int getCopyNumber() {

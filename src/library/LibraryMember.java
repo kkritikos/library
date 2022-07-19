@@ -3,7 +3,7 @@ package library;
 public class LibraryMember extends Person implements java.io.Serializable{
 	private static final long serialVersionUID = 764887563986434491L;
 	
-	private String memberId;
+	private final String memberId;
 	
 	public LibraryMember(String id, String name, String memberId) {
 		super(id,name);
@@ -11,7 +11,7 @@ public class LibraryMember extends Person implements java.io.Serializable{
 	}
 	
 	public String getMemberId() {
-		return new String(memberId);
+		return memberId;
 	}
 	
 	public String toString() {
