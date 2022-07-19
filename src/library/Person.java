@@ -3,7 +3,7 @@ package library;
 public class Person implements java.io.Serializable{
 	private static final long serialVersionUID = -9132275263691387159L;
 	
-	private String name, id;
+	private final String name, id;
 	
 	public Person(String id, String name) {
 		this.id = id;
@@ -11,11 +11,11 @@ public class Person implements java.io.Serializable{
 	}
 
 	public String getName() {
-		return new String(name);
+		return name;
 	}
 
 	public String getId() {
-		return new String(id);
+		return id;
 	}
 	
 	public String toString() {
