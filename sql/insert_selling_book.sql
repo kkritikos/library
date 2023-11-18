@@ -1,1 +1,0 @@
-insert into sellingBook values(?, ?, ?, 0);

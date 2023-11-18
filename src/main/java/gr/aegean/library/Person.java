@@ -1,9 +1,19 @@
-package library;
+package gr.aegean.library;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class Person implements java.io.Serializable{
 	private static final long serialVersionUID = -9132275263691387159L;
 	
-	private final String name, id;
+	@Id
+	private String id;
+	private String name;
+	
+	protected Person() {
+		
+	}
 	
 	public Person(String id, String name) {
 		this.id = id;
@@ -13,7 +23,7 @@ public class Person implements java.io.Serializable{
 	public String getName() {
 		return name;
 	}
-
+	
 	public String getId() {
 		return id;
 	}

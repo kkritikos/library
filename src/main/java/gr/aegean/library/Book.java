@@ -1,11 +1,28 @@
-package library;
+package gr.aegean.library;
 
+import java.util.UUID;
+
+import org.hibernate.annotations.NaturalId;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Book implements java.io.Serializable{
 	private static final long serialVersionUID = -992069083415874065L;
 	
-	private final String isbn;
-	private final String title;
+	@Id
+	@GeneratedValue
+	private UUID id;
+	@NaturalId
+	private String isbn;
+	private String title;
 	private int copyNumber = 0;
+	
+	protected Book() {
+		
+	}
 	
 	public Book(String isbn, String title, int copyNumber) {
 		this.isbn = isbn;
@@ -13,20 +30,20 @@ public abstract class Book implements java.io.Serializable{
 		this.copyNumber = copyNumber;
 	}
 	
+	public UUID getId() {
+		return id;
+	}
+	
 	public String getIsbn() {
 		return isbn;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
 	
 	public int getCopyNumber() {
 		return copyNumber;
-	}
-	
-	public void setCopyNumber(int copyNumber) {
-		this.copyNumber = copyNumber;
 	}
 	
 	public String toString() {

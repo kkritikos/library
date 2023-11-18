@@ -1,1 +1,0 @@
-delete from lendedBy where isbn=? and memberId=?
