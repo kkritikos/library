@@ -224,6 +224,7 @@ public class Menu {
 		} while (choice >= 1 && choice <= 7);
 		
 		input.close();
+		HibernateBootstrap.destroy();
 		System.out.println("Exited!!!");
 	}
 
