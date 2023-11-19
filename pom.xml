@@ -11,8 +11,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-exec>1.2.1</maven-exec>
     <assembly-version>3.3.0</assembly-version>
-    <hibernate-version>6.3.0.Final</hibernate-version>
-    <h2-version>2.0.202</h2-version>
+    <hibernate-version>5.6.15.Final</hibernate-version>
+    <h2-version>1.4.197</h2-version>
   </properties>
   
   <dependencies>

@@ -33,7 +33,7 @@ public class Menu {
 	private static void flushChanges(Library library) {
 		Session session = HibernateBootstrap.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.update(library);
+		session.saveOrUpdate(library);
 		session.getTransaction().commit();
 	}
 	

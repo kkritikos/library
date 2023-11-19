@@ -2,7 +2,7 @@ package gr.aegean.library;
 
 import org.hibernate.annotations.NaturalId;
 
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
 
 @Entity
 public class LibraryMember extends Person implements java.io.Serializable{

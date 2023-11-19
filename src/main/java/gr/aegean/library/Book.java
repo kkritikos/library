@@ -2,11 +2,12 @@ package gr.aegean.library;
 
 import java.util.UUID;
 
-import org.hibernate.annotations.NaturalId;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import org.hibernate.annotations.NaturalId;
 
 @MappedSuperclass
 public abstract class Book implements java.io.Serializable{
@@ -17,7 +18,9 @@ public abstract class Book implements java.io.Serializable{
 	private UUID id;
 	@NaturalId
 	private String isbn;
+	//@Basic(optional=false)
 	private String title;
+	//@Basic(optional=false)
 	private int copyNumber = 0;
 	
 	protected Book() {

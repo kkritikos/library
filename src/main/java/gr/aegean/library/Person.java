@@ -1,7 +1,8 @@
 package gr.aegean.library;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import javax.persistence.Basic;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class Person implements java.io.Serializable{
@@ -9,6 +10,7 @@ public class Person implements java.io.Serializable{
 	
 	@Id
 	private String id;
+	@Basic(optional=false)
 	private String name;
 	
 	protected Person() {
