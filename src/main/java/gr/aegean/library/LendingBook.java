@@ -42,7 +42,7 @@ public class LendingBook extends Book implements java.io.Serializable{
 	}
 	
 	public boolean removeLender(LibraryMember member) {
-		if (super.getCopyNumber() > 0 && lenders.remove(member)) {
+		if (itemsLended > 0 && lenders.remove(member)) {
 			itemsLended--;
 			return true;
 		}
